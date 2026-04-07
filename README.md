@@ -62,7 +62,13 @@ npm start
 This project is prepared for Vercel:
 
 - static pages are served directly
-- API endpoints are available through `api/[...route].js`
+- API endpoints are exposed through file-based Vercel serverless routes
+  - `api/market/indices`
+  - `api/market/news`
+  - `api/screener/sectors`
+  - `api/screener/sector`
+  - `api/screener/search`
+  - `api/screener/stock`
 - local development still uses `server.js`
 
 Recommended deployment flow:
@@ -70,11 +76,14 @@ Recommended deployment flow:
 1. Push this repository to GitHub
 2. Import the repository into Vercel
 3. Deploy with default settings
+4. Redeploy after backend route changes so Vercel rebuilds the serverless functions
 
 ## Project Files
 
 - `server.js`: local Node server for development
-- `api/[...route].js`: Vercel serverless API entry
+- `api/_lib/data.js`: shared market and screener data helpers for Vercel routes
+- `api/market/*.js`: market-related Vercel serverless routes
+- `api/screener/*.js`: screener-related Vercel serverless routes
 - `styles.css`: shared design system and layout
 - `app.js`: page-level script loader
 - `planner.js`: planning and calculator logic
