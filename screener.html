@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Screener | Intelligent Investor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body data-page="screener">
+    <div class="page-shell">
+      <div class="ambient ambient-one"></div>
+      <div class="ambient ambient-two"></div>
+      <header class="topbar glass-panel">
+        <div>
+          <p class="eyebrow">Screener</p>
+          <h1 class="brand">Intelligent Investor</h1>
+        </div>
+        <nav class="topnav">
+          <a href="./index.html">Home</a>
+          <a href="./planner.html">Planning Engine</a>
+          <a href="./market.html">Market Intelligence</a>
+          <a href="./learning.html">Learning Hub</a>
+          <a href="./screener.html">Screener</a>
+          <a href="./founder.html">Founder</a>
+        </nav>
+      </header>
+
+      <main>
+        <section class="page-hero glass-panel">
+          <p class="eyebrow">Core Feature</p>
+          <h2>Sector-level market screening and stock-level discovery in one focused workspace</h2>
+          <p class="hero-text">
+            The screener is designed as a practical research surface. Users can
+            start with sectors, understand the sector index, inspect top
+            weighted stocks, and then search any stock for business and
+            market-oriented details.
+          </p>
+        </section>
+
+        <section class="section-block">
+          <div class="screener-search glass-panel">
+            <div class="control-group">
+              <label for="stockSearchInput">Search any stock</label>
+              <input id="stockSearchInput" type="text" placeholder="Try Reliance, TCS, HDFC Bank, Infosys..." />
+            </div>
+            <button id="stockSearchButton" class="btn btn-primary" type="button">Search Stock</button>
+          </div>
+          <div id="searchFeedback" class="visual-explanation search-feedback"></div>
+        </section>
+
+        <section class="section-block screener-layout">
+          <aside class="glass-panel screener-sidebar">
+            <p class="eyebrow">Sectors</p>
+            <div id="sectorList" class="sector-list"></div>
+          </aside>
+
+          <div class="screener-main">
+            <article class="glass-panel screener-overview">
+              <div class="card-heading">
+                <h3 id="sectorTitle">Loading sector...</h3>
+                <p id="sectorDescription"></p>
+              </div>
+              <div id="sectorMetrics" class="live-index-grid"></div>
+              <div class="chart-shell">
+                <svg id="sectorChart" viewBox="0 0 900 320" class="market-chart" aria-label="Sector chart">
+                  <defs>
+                    <linearGradient id="sectorLine" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stop-color="#39e3ff" />
+                      <stop offset="100%" stop-color="#8cffe8" />
+                    </linearGradient>
+                    <linearGradient id="sectorFill" x1="0%" y1="0%" x2="0%" y2="100%">
+                      <stop offset="0%" stop-color="rgba(57, 227, 255, 0.32)" />
+                      <stop offset="100%" stop-color="rgba(57, 227, 255, 0.02)" />
+                    </linearGradient>
+                  </defs>
+                  <path id="sectorGridPath" class="chart-grid-lines"></path>
+                  <path id="sectorArea" fill="url(#sectorFill)"></path>
+                  <path id="sectorLinePath" fill="none" stroke="url(#sectorLine)" stroke-width="5" stroke-linecap="round"></path>
+                </svg>
+              </div>
+              <div id="sectorCaption" class="chart-caption">Loading sector chart...</div>
+            </article>
+
+            <article class="glass-panel screener-stocks">
+              <div class="card-heading">
+                <h3>Top Weighted Stocks</h3>
+                <p>Major names that strongly influence the selected sector index.</p>
+              </div>
+              <div id="stockTable" class="stock-table"></div>
+            </article>
+
+            <article class="glass-panel stock-detail-panel">
+              <div class="card-heading">
+                <h3>Stock Detail</h3>
+                <p>Business context, key indicators, and technical summary for the searched symbol.</p>
+              </div>
+              <div id="stockDetail" class="insight-list"></div>
+            </article>
+          </div>
+        </section>
+      </main>
+
+      <script src="./app.js"></script>
+    </div>
+  </body>
+</html>

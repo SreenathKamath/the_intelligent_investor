@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Market Intelligence | Intelligent Investor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body data-page="market">
+    <div class="page-shell">
+      <div class="ambient ambient-one"></div>
+      <div class="ambient ambient-two"></div>
+      <header class="topbar glass-panel">
+        <div>
+          <p class="eyebrow">Market Intelligence</p>
+          <h1 class="brand">Intelligent Investor</h1>
+        </div>
+        <nav class="topnav">
+          <a href="./index.html">Home</a>
+          <a href="./planner.html">Planning Engine</a>
+          <a href="./market.html">Market Intelligence</a>
+          <a href="./learning.html">Learning Hub</a>
+          <a href="./screener.html">Screener</a>
+          <a href="./founder.html">Founder</a>
+        </nav>
+      </header>
+
+      <main>
+        <section class="page-hero glass-panel">
+          <p class="eyebrow">Focused Page</p>
+          <h2>Market context, live index movement, and portfolio architecture in one place</h2>
+          <p class="hero-text">
+            This page is designed for users who want a sharper market view
+            after their personal budgeting foundation is already in place.
+          </p>
+        </section>
+
+        <section class="section-block">
+          <div class="investor-grid">
+            <article class="glass-panel market-news-card span-2">
+              <div class="card-heading inline-heading">
+                <div>
+                  <h3>Live Index Radar</h3>
+                  <p>Yahoo Finance-backed chart proxy with India-focused benchmark tracking.</p>
+                </div>
+                <div class="range-switcher">
+                  <button class="range-btn active" data-range="5d" type="button">5D</button>
+                  <button class="range-btn" data-range="1mo" type="button">1M</button>
+                  <button class="range-btn" data-range="6mo" type="button">6M</button>
+                  <button class="range-btn" data-range="1y" type="button">1Y</button>
+                </div>
+              </div>
+              <div id="live-index-grid" class="live-index-grid"></div>
+              <div class="chart-shell">
+                <svg id="market-chart" viewBox="0 0 900 320" class="market-chart" aria-label="Live market chart">
+                  <defs>
+                    <linearGradient id="marketLine" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#39e3ff" /><stop offset="100%" stop-color="#8cffe8" /></linearGradient>
+                    <linearGradient id="marketFill" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="rgba(57, 227, 255, 0.32)" /><stop offset="100%" stop-color="rgba(57, 227, 255, 0.02)" /></linearGradient>
+                  </defs>
+                  <path id="market-grid-path" class="chart-grid-lines"></path>
+                  <path id="market-area" fill="url(#marketFill)"></path>
+                  <path id="market-line" fill="none" stroke="url(#marketLine)" stroke-width="5" stroke-linecap="round"></path>
+                </svg>
+              </div>
+              <div id="chart-caption" class="chart-caption">Loading market data...</div>
+            </article>
+
+            <article class="glass-panel"><div class="card-heading inline-heading"><div><h3>Market News Dashboard</h3><p>API-backed India and global market headlines.</p></div><span class="status-pill">Auto Refresh Enabled</span></div><div id="news-list" class="news-list"></div></article>
+            <article class="glass-panel"><div class="card-heading"><h3>Sector Strategy Lens</h3><p>How a disciplined beginner can look at sectors without overtrading them.</p></div><div id="sector-grid" class="sector-grid"></div></article>
+            <article class="glass-panel"><div class="card-heading"><h3>Portfolio Architecture</h3><p>What strong modern portfolios often do better than casual investors.</p></div><div id="portfolio-playbook" class="portfolio-playbook"></div></article>
+          </div>
+        </section>
+
+        <section class="section-block">
+          <div class="section-heading">
+            <p class="eyebrow">Knowledge Hub</p>
+            <h2>Books and frameworks that improve investor thinking</h2>
+          </div>
+          <div class="knowledge-layout">
+            <div id="books-grid" class="books-grid"></div>
+            <article class="glass-panel book-detail" id="book-detail"></article>
+          </div>
+        </section>
+      </main>
+
+      <script src="./app.js"></script>
+    </div>
+  </body>
+</html>

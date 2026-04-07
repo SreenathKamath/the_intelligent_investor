@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Learning Hub | Intelligent Investor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body data-page="learning">
+    <div class="page-shell">
+      <div class="ambient ambient-one"></div>
+      <div class="ambient ambient-two"></div>
+      <header class="topbar glass-panel">
+        <div>
+          <p class="eyebrow">Learning Hub</p>
+          <h1 class="brand">Intelligent Investor</h1>
+        </div>
+        <nav class="topnav">
+          <a href="./index.html">Home</a>
+          <a href="./planner.html">Planning Engine</a>
+          <a href="./market.html">Market Intelligence</a>
+          <a href="./learning.html">Learning Hub</a>
+          <a href="./screener.html">Screener</a>
+          <a href="./founder.html">Founder</a>
+        </nav>
+      </header>
+
+      <main>
+        <section class="page-hero glass-panel">
+          <p class="eyebrow">Focused Page</p>
+          <h2>Learn the language of money and markets from beginner to expert level</h2>
+          <p class="hero-text">
+            This page is designed as a progressive education system. Users can
+            choose whether they want to study fundamentals, technical analysis,
+            or the full stock market pathway, then move through levels with
+            explanations, visuals, and quizzes.
+          </p>
+        </section>
+
+        <section class="section-block">
+          <div class="learning-controls glass-panel">
+            <div class="control-group">
+              <label for="trackSelect">Track</label>
+              <select id="trackSelect">
+                <option value="fundamentals">Fundamentals</option>
+                <option value="technical">Technical</option>
+                <option value="stock-market">Stock Market</option>
+              </select>
+            </div>
+            <div class="control-group">
+              <label for="levelSelect">Level</label>
+              <select id="levelSelect">
+                <option value="beginner">Beginner</option>
+                <option value="intermediate">Intermediate</option>
+                <option value="expert">Expert</option>
+              </select>
+            </div>
+          </div>
+        </section>
+
+        <section class="section-block learning-layout">
+          <article class="glass-panel learning-summary">
+            <p class="eyebrow">Track Summary</p>
+            <h3 id="learningTitle">Loading...</h3>
+            <p id="learningDescription"></p>
+            <div id="learningVisual" class="learning-visual"></div>
+          </article>
+
+          <article class="glass-panel learning-content">
+            <p class="eyebrow">Concept Path</p>
+            <div id="learningCards" class="learning-cards"></div>
+          </article>
+        </section>
+
+        <section class="section-block">
+          <div class="section-heading">
+            <p class="eyebrow">Quiz</p>
+            <h2>Test understanding before moving to the next level</h2>
+          </div>
+          <div id="quizSection" class="quiz-grid"></div>
+        </section>
+
+        <section class="section-block">
+          <div class="section-heading">
+            <p class="eyebrow">Useful Links</p>
+            <h2>Continue learning from trusted external resources</h2>
+          </div>
+          <div id="resourceLinks" class="route-grid"></div>
+        </section>
+      </main>
+
+      <script src="./app.js"></script>
+    </div>
+  </body>
+</html>

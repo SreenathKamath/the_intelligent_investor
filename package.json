@@ -1,0 +1,10 @@
+{
+  "name": "intelligent-investor",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js",
+    "check": "node --check app.js && node --check planner.js && node --check market.js && node --check knowledge.js && node --check learning.js && node --check screener.js && node --check server.js"
+  }
+}

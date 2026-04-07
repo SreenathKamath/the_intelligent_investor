@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Planning Engine | Intelligent Investor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body data-page="planner">
+    <div class="page-shell">
+      <div class="ambient ambient-one"></div>
+      <div class="ambient ambient-two"></div>
+      <header class="topbar glass-panel">
+        <div>
+          <p class="eyebrow">Planning Engine</p>
+          <h1 class="brand">Intelligent Investor</h1>
+        </div>
+        <nav class="topnav">
+          <a href="./index.html">Home</a>
+          <a href="./planner.html">Planning Engine</a>
+          <a href="./market.html">Market Intelligence</a>
+          <a href="./learning.html">Learning Hub</a>
+          <a href="./screener.html">Screener</a>
+          <a href="./founder.html">Founder</a>
+        </nav>
+      </header>
+
+      <main>
+        <section class="page-hero glass-panel">
+          <p class="eyebrow">Focused Page</p>
+          <h2>Personal finance planning built for real people, not finance experts</h2>
+          <p class="hero-text">
+            This page is dedicated to budgeting, cash flow, risk awareness, and
+            goal-led investing. It is intentionally separated from market noise
+            so users can think clearly about their own money first.
+          </p>
+        </section>
+
+        <section class="section-block planner-only">
+          <div class="beginner-layout">
+            <form id="planner-form" class="glass-panel planner-card">
+              <div class="card-heading">
+                <h3>Financial Health Input</h3>
+                <p>
+                  The engine evaluates budgeting, savings strength, debt
+                  pressure, emergency readiness, goal feasibility, and portfolio
+                  mix from one combined input set.
+                </p>
+              </div>
+              <div class="helper-callout">Hover the info icons to understand each field before entering numbers.</div>
+              <div class="form-grid">
+                <label class="span-2">
+                  <span class="label-row">Budget Style <button class="info-dot" type="button" data-tooltip="Choose the budgeting rule that feels closest to your current life. The calculator will compare your numbers only against this style and give suggestions based on it.">i</button></span>
+                  <select id="budgetRule" name="budgetRule">
+                    <option value="balanced">50:30:20 Balanced</option>
+                    <option value="essentials">60:20:20 Essentials First</option>
+                    <option value="builder">50:20:30 Wealth Builder</option>
+                    <option value="survival">70:20:10 Stability Mode</option>
+                  </select>
+                </label>
+                <label><span class="label-row">Age <button class="info-dot" type="button" data-tooltip="Used to shape how much long-term growth risk may be appropriate. Younger users with longer timelines can usually hold more equity.">i</button></span><input id="age" name="age" type="number" min="18" max="80" value="29" /></label>
+                <label><span class="label-row">Monthly Income <button class="info-dot" type="button" data-tooltip="Your regular take-home income per month. This is the base used to judge spending ratios, savings capacity, and safe investing levels.">i</button></span><input id="income" name="income" type="number" min="0" value="95000" /></label>
+                <label><span class="label-row">Fixed Essentials <button class="info-dot" type="button" data-tooltip="Expenses that are difficult to skip or reduce quickly, such as rent, groceries, insurance, school fees, and basic household bills.">i</button></span><input id="fixedExpenses" name="fixedExpenses" type="number" min="0" value="28000" /></label>
+                <label><span class="label-row">Flexible Spending <button class="info-dot" type="button" data-tooltip="Lifestyle spending that can be reduced if needed, such as eating out, shopping, subscriptions, travel, and entertainment.">i</button></span><input id="flexibleExpenses" name="flexibleExpenses" type="number" min="0" value="14000" /></label>
+                <label><span class="label-row">Current EMI / Debt <button class="info-dot" type="button" data-tooltip="Total monthly loan obligations like EMI, personal loan, vehicle loan, or credit-card repayment. Higher debt reduces safe investing capacity.">i</button></span><input id="emi" name="emi" type="number" min="0" value="6000" /></label>
+                <label><span class="label-row">Existing Savings <button class="info-dot" type="button" data-tooltip="Money already available in savings account, deposits, or liquid investments that can support emergencies or future goals.">i</button></span><input id="savings" name="savings" type="number" min="0" value="220000" /></label>
+                <label><span class="label-row">Goal Corpus <button class="info-dot" type="button" data-tooltip="The amount you want to build in the future for a goal such as a house down payment, education, business, or retirement milestone.">i</button></span><input id="goalAmount" name="goalAmount" type="number" min="0" value="1500000" /></label>
+                <label><span class="label-row">Goal Horizon (Years) <button class="info-dot" type="button" data-tooltip="How many years remain before you need the goal amount. Longer timelines usually allow more growth assets; shorter goals need more stability.">i</button></span><input id="goalYears" name="goalYears" type="number" min="1" max="40" value="8" /></label>
+                <label class="span-2"><span class="label-row">Risk Preference <button class="info-dot" type="button" data-tooltip="How comfortable you are with market ups and downs. Aggressive means more volatility for potentially higher growth. Conservative means smoother but slower growth.">i</button></span><select id="riskPreference" name="riskPreference"><option value="moderate">Moderate</option><option value="aggressive">Aggressive</option><option value="conservative">Conservative</option></select></label>
+              </div>
+              <div class="cta-row">
+                <button class="btn btn-primary" type="submit">Generate Full Plan</button>
+                <button class="btn btn-secondary" type="button" id="scenario-button">Load Growth Scenario</button>
+              </div>
+              <p class="helper-text">Educational guidance only. Always validate final investment decisions with your own research or a registered advisor.</p>
+            </form>
+
+            <div class="planner-results">
+              <article class="glass-panel output-card"><div class="card-heading"><h3>Budget Blueprint</h3><p>Your selected budget style compared against your real monthly spending.</p></div><div id="budget-split" class="split-grid"></div><div id="budget-explanation" class="visual-explanation"></div></article>
+              <article class="glass-panel output-card"><div class="card-heading"><h3>Financial Health Ratios</h3><p>Ratios that actually tell whether the plan is sustainable.</p></div><div id="ratio-grid" class="ratio-grid"></div><div id="ratio-explanations" class="ratio-explanations"></div></article>
+              <article class="glass-panel output-card"><div class="card-heading"><h3>Recommended Portfolio Mix</h3><p>Goal- and risk-led asset allocation with implementation ideas.</p></div><div id="allocation-chart" class="allocation-chart"></div><div id="allocation-summary" class="allocation-summary"></div></article>
+              <article class="glass-panel output-card"><div class="card-heading"><h3>Cash Flow Visual</h3><p>A simple picture of how your monthly income is getting used.</p></div><div id="cashflow-chart" class="cashflow-chart"></div><div id="cashflow-caption" class="visual-explanation"></div></article>
+              <article class="glass-panel output-card"><div class="card-heading"><h3>Where To Invest Next</h3><p>Priority buckets for the next phase of your capital.</p></div><div id="investment-lanes" class="investment-lanes"></div></article>
+              <article class="glass-panel output-card"><div class="card-heading"><h3>Emergency, Debt & Risk Engine</h3><p>Cash resilience, EMI pressure, and liquidity discipline.</p></div><div id="risk-panel" class="insight-list"></div></article>
+              <article class="glass-panel output-card"><div class="card-heading"><h3>Goal & Projection Studio</h3><p>Projected wealth path, SIP need, and affordability gap.</p></div><div id="projection-panel" class="projection-panel"></div></article>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <script src="./app.js"></script>
+    </div>
+  </body>
+</html>

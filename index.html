@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Intelligent Investor</title>
+    <meta
+      name="description"
+      content="Intelligent Investor is a multi-page financial platform for planning, market intelligence, and investor education."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body data-page="home">
+    <div class="page-shell">
+      <div class="ambient ambient-one"></div>
+      <div class="ambient ambient-two"></div>
+      <header class="topbar glass-panel">
+        <div>
+          <p class="eyebrow">Financial OS 2045</p>
+          <h1 class="brand">Intelligent Investor</h1>
+        </div>
+        <nav class="topnav">
+          <a href="./index.html">Home</a>
+          <a href="./planner.html">Planning Engine</a>
+          <a href="./market.html">Market Intelligence</a>
+          <a href="./learning.html">Learning Hub</a>
+          <a href="./screener.html">Screener</a>
+          <a href="./founder.html">Founder</a>
+        </nav>
+      </header>
+
+      <main>
+        <section class="hero">
+          <div class="hero-copy">
+            <p class="eyebrow">Trusted financial companion</p>
+            <h2>Master Your Money. Control Your Future.</h2>
+            <p class="hero-text">
+              Intelligent Investor is designed as a complete financial website
+              for beginners, planners, and market-focused investors. Instead of
+              one overloaded page, each area now has a focused destination with
+              clearer guidance and stronger decision support.
+            </p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="./planner.html">Go To Planning Engine</a>
+              <a class="btn btn-secondary" href="./market.html">Explore Market Intelligence</a>
+            </div>
+            <div class="hero-founder glass-panel">
+              <p class="eyebrow">Created by</p>
+              <h3>Sreenath S Kamath</h3>
+              <p>
+                Software Engineer, passionate market investor, and certified in
+                the SEBI Investor Awareness Test by the National Institute of
+                Securities Markets.
+              </p>
+            </div>
+          </div>
+
+          <div class="hero-visual glass-panel">
+            <div class="hero-grid"></div>
+            <div class="market-orb"></div>
+            <div id="hero-ticker" class="ticker-row">
+              <span>NIFTY 50 <strong>Loading</strong></span>
+              <span class="profit">Fetching</span>
+              <span>SENSEX <strong>Loading</strong></span>
+              <span class="profit">Fetching</span>
+            </div>
+            <svg viewBox="0 0 800 360" class="hero-chart" aria-hidden="true">
+              <defs>
+                <linearGradient id="heroLine" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#37e7ff" />
+                  <stop offset="50%" stop-color="#50ffb1" />
+                  <stop offset="100%" stop-color="#7aa6ff" />
+                </linearGradient>
+                <linearGradient id="chartFill" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="rgba(55, 231, 255, 0.4)" />
+                  <stop offset="100%" stop-color="rgba(55, 231, 255, 0)" />
+                </linearGradient>
+              </defs>
+              <path id="hero-line-path" fill="none" stroke="url(#heroLine)" stroke-width="6" stroke-linecap="round"></path>
+              <path id="hero-area-path" fill="url(#chartFill)"></path>
+            </svg>
+            <div class="hero-stat-strip">
+              <article class="mini-stat">
+                <span>Planner</span>
+                <strong>Beginner Friendly</strong>
+              </article>
+              <article class="mini-stat">
+                <span>Markets</span>
+                <strong>Live Signals</strong>
+              </article>
+              <article class="mini-stat">
+                <span>Founder</span>
+                <strong>Credible Vision</strong>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="section-block">
+          <div class="section-heading">
+            <p class="eyebrow">Explore</p>
+            <h2>Focused pages for every financial need</h2>
+          </div>
+          <div class="route-grid">
+            <a class="glass-panel route-card" href="./planner.html">
+              <p class="eyebrow">Page 1</p>
+              <h3>Planning Engine</h3>
+              <p>
+                Budgeting rules, ratio explanations, visual cash-flow analysis,
+                goal planning, and beginner-friendly investment direction.
+              </p>
+              <span class="trend up">Best for learners and planners</span>
+            </a>
+            <a class="glass-panel route-card" href="./market.html">
+              <p class="eyebrow">Page 2</p>
+              <h3>Market Intelligence</h3>
+              <p>
+                Live index radar, market headlines, sector lens, and portfolio
+                architecture ideas for research-driven users.
+              </p>
+              <span class="trend flat">Best for active investors</span>
+            </a>
+            <a class="glass-panel route-card" href="./founder.html">
+              <p class="eyebrow">Page 3</p>
+              <h3>Founder & Vision</h3>
+              <p>
+                A trust-building page that explains the mission, the founder’s
+                background, and why the platform exists.
+              </p>
+              <span class="trend up">Best for trust and credibility</span>
+            </a>
+            <a class="glass-panel route-card" href="./learning.html">
+              <p class="eyebrow">Page 4</p>
+              <h3>Learning Hub</h3>
+              <p>
+                Fundamentals, technical analysis, stock market pathways, and
+                quizzes for beginners through expert-level learners.
+              </p>
+              <span class="trend up">Best for structured learning</span>
+            </a>
+            <a class="glass-panel route-card" href="./screener.html">
+              <p class="eyebrow">Page 5</p>
+              <h3>Screener</h3>
+              <p>
+                Sector index view, top weighted stocks, stock search, and
+                detailed research snapshots for practical market screening.
+              </p>
+              <span class="trend up">Best for research and discovery</span>
+            </a>
+          </div>
+        </section>
+
+        <section class="section-block">
+          <div class="section-heading">
+            <p class="eyebrow">Why It Works</p>
+            <h2>A professional structure built for clarity and growth</h2>
+          </div>
+          <div class="about-grid">
+            <article class="glass-panel about-card">
+              <h3>Cleaner decision paths</h3>
+              <p>
+                The landing page now sells the value clearly, while each inner
+                page focuses on one major job instead of trying to do everything
+                at once.
+              </p>
+            </article>
+            <article class="glass-panel about-card">
+              <h3>Better user confidence</h3>
+              <p>
+                Beginners can stay in the planning experience without being
+                overwhelmed by market data, and advanced users can go straight
+                to analysis.
+              </p>
+            </article>
+            <article class="glass-panel about-card">
+              <h3>Scalable architecture</h3>
+              <p>
+                This structure makes it easier to later add login, portfolio
+                tracking, AI guidance, and premium tools as separate modules.
+              </p>
+            </article>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
