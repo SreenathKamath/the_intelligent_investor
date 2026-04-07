@@ -5,6 +5,6 @@
   "scripts": {
     "dev": "node server.js",
     "start": "node server.js",
-    "check": "node --check app.js && node --check planner.js && node --check market.js && node --check knowledge.js && node --check learning.js && node --check screener.js && node --check server.js && node --check api\\_lib\\data.js && node --check api\\market\\indices.js && node --check api\\market\\news.js && node --check api\\screener\\sectors.js && node --check api\\screener\\sector.js && node --check api\\screener\\search.js && node --check api\\screener\\stock.js"
+    "check": "node --check app.js && node --check planner.js && node --check market.js && node --check knowledge.js && node --check learning.js && node --check screener.js && node --check server.js && node --check api\\_lib\\data.js && node --check api\\_lib\\dynamic.js && node --check api\\books.js && node --check api\\learning\\content.js && node --check api\\market\\indices.js && node --check api\\market\\news.js && node --check api\\screener\\sectors.js && node --check api\\screener\\sector.js && node --check api\\screener\\search.js && node --check api\\screener\\stock.js"
   }
 }

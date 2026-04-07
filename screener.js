@@ -91,7 +91,7 @@ function renderSectorDetail(payload) {
   document.getElementById("sectorLinePath").setAttribute("d", chart.linePath);
   document.getElementById("sectorArea").setAttribute("d", chart.areaPath);
   document.getElementById("sectorGridPath").setAttribute("d", chart.gridPath);
-  document.getElementById("sectorCaption").textContent = `${payload.sector.name} | ${payload.sector.rangeLabel} | Last updated ${payload.sector.updatedAt}`;
+  document.getElementById("sectorCaption").textContent = `${payload.sector.name} | ${payload.sector.rangeLabel} | Last updated ${payload.sector.updatedAt}${payload.source ? " | Constituents: official Nifty file" : ""}`;
 
   document.getElementById("stockTable").innerHTML = payload.stocks
     .map(
@@ -153,7 +153,7 @@ function renderStockDetail(detail, warning = "") {
       <strong>Workflow idea</strong>
       <span>Start with business quality, then check valuation, then compare price trend with the 50-day and 200-day averages before making a conviction decision.</span>
     </div>
-    ${warning ? `<div class="insight-item"><strong>Source note</strong><span>${warning}</span></div>` : ""}
+    ${warning ? `<div class="insight-item"><strong>Source note</strong><span>${warning}</span></div>` : ""}${detail.sourceUrl ? `<div class="insight-item"><strong>Reference</strong><span><a class="trend flat" href="${detail.sourceUrl}" target="_blank" rel="noreferrer">Open external reference</a></span></div>` : ""}
   `;
 }
 

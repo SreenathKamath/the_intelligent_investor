@@ -1,23 +1,26 @@
-const { rangeConfig, sectorMap, sendJson, fetchYahooIndex, fetchYahooQuoteBatch } = require("../_lib/data");
+const { rangeConfig, sendJson, fetchYahooIndex, fetchYahooQuoteBatch } = require("../_lib/data");
+const { sectorCatalog, fetchSectorStocks } = require("../_lib/dynamic");
 
 module.exports = async function handler(req, res) {
   const requestUrl = new URL(req.url, `https://${req.headers.host || "localhost"}`);
   const key = requestUrl.searchParams.get("key") || "banking";
-  const sector = sectorMap[key] || sectorMap.banking;
+  const sector = sectorCatalog[key] || sectorCatalog.banking;
   const config = rangeConfig["1mo"];
 
   try {
+    const constituents = await fetchSectorStocks(sector.key);
+    const topStocks = constituents.slice(0, 10);
     const [sectorIndex, stockQuotes] = await Promise.all([
       fetchYahooIndex(sector.symbol, config),
-      fetchYahooQuoteBatch(sector.stocks.map((item) => item.symbol)),
+      fetchYahooQuoteBatch(topStocks.map((item) => item.symbol)),
     ]);
 
     const quoteMap = new Map(stockQuotes.map((quote) => [quote.symbol, quote]));
-    const stocks = sector.stocks.map((stock) => {
+    const stocks = topStocks.map((stock) => {
       const quote = quoteMap.get(stock.symbol) || {};
       return {
         symbol: stock.symbol,
-        shortName: quote.shortName || stock.symbol,
+        shortName: quote.shortName || stock.companyName || stock.symbol,
         weight: stock.weight,
         price: quote.regularMarketPrice || 0,
         changePercent: quote.regularMarketChangePercent || 0,
@@ -31,9 +34,11 @@ module.exports = async function handler(req, res) {
       sector: {
         ...sectorIndex,
         key: sector.key,
+        name: sector.name,
         description: sector.description,
       },
       stocks,
+      source: sector.constituentUrl,
     });
   } catch (error) {
     sendJson(res, 200, {
@@ -48,7 +53,7 @@ module.exports = async function handler(req, res) {
         updatedAt: "offline mode",
         series: [100, 105, 103, 110, 108, 112, 116, 115, 118, 121],
       },
-      stocks: sector.stocks.map((stock, index) => ({
+      stocks: sector.fallbackStocks.map((stock, index) => ({
         symbol: stock.symbol,
         shortName: stock.symbol,
         weight: stock.weight,

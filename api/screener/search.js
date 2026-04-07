@@ -1,4 +1,5 @@
-const { sendJson, fetchYahooSearch, resolveIndianSymbol, isIndianQuote, searchScore } = require("../_lib/data");
+const { sendJson, fetchYahooSearch, isIndianQuote, searchScore } = require("../_lib/data");
+const { resolveIndianSymbol } = require("../_lib/dynamic");
 
 module.exports = async function handler(req, res) {
   const requestUrl = new URL(req.url, `https://${req.headers.host || "localhost"}`);

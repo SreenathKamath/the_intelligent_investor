@@ -1,6 +1,14 @@
 const http = require("http");
 const fs = require("fs");
 const path = require("path");
+const marketIndicesHandler = require("./api/market/indices");
+const marketNewsHandler = require("./api/market/news");
+const screenerSectorsHandler = require("./api/screener/sectors");
+const screenerSectorHandler = require("./api/screener/sector");
+const screenerSearchHandler = require("./api/screener/search");
+const screenerStockHandler = require("./api/screener/stock");
+const booksHandler = require("./api/books");
+const learningContentHandler = require("./api/learning/content");
 
 const port = process.env.PORT || 3000;
 const root = __dirname;
@@ -678,38 +686,50 @@ http
     const requestUrl = new URL(request.url, `http://${request.headers.host}`);
 
     if (requestUrl.pathname === "/api/market/indices") {
-      await handleIndices(response, requestUrl);
+      await marketIndicesHandler(request, response);
       return;
     }
 
     if (requestUrl.pathname === "/api/market/news") {
-      await handleNews(response);
+      await marketNewsHandler(request, response);
       return;
     }
 
     if (requestUrl.pathname === "/api/screener/sectors") {
-      await handleScreenerSectors(response);
+      await screenerSectorsHandler(request, response);
       return;
     }
 
     if (requestUrl.pathname === "/api/screener/sector") {
-      await handleScreenerSector(response, requestUrl);
+      await screenerSectorHandler(request, response);
       return;
     }
 
     if (requestUrl.pathname === "/api/screener/search") {
-      await handleScreenerSearch(response, requestUrl);
+      await screenerSearchHandler(request, response);
       return;
     }
 
     if (requestUrl.pathname === "/api/screener/stock") {
-      await handleScreenerStock(response, requestUrl);
+      await screenerStockHandler(request, response);
       return;
     }
 
+
+    if (requestUrl.pathname === "/api/books") {
+      await booksHandler(request, response);
+      return;
+    }
+
+    if (requestUrl.pathname === "/api/learning/content") {
+      await learningContentHandler(request, response);
+      return;
+    }
     const requestPath = requestUrl.pathname === "/" ? "/index.html" : requestUrl.pathname;
     serveStatic(requestPath, response);
   })
   .listen(port, () => {
     console.log(`Intelligent Investor available at http://localhost:${port}`);
   });
+
+

@@ -1,11 +1,3 @@
-const sectorInsights = [
-  { name: "IT", move: "Global outsourcing + AI capex", trend: "up", summary: "Use broad exposure first. Sector funds should stay a small satellite allocation unless you already have a strong core portfolio." },
-  { name: "Banking", move: "Credit growth + rate cycle sensitivity", trend: "up", summary: "Large private banks often form the backbone of India exposure. Keep single-stock concentration under control." },
-  { name: "Pharma", move: "Defensive earnings + export pipelines", trend: "flat", summary: "Useful as a stabilizer, but beginners should still prefer diversified funds over chasing short-term momentum." },
-  { name: "FMCG", move: "Margin pressure + consumption resilience", trend: "flat", summary: "A classic steady compounder area, but valuation discipline matters because defensives can become expensive." },
-  { name: "Energy", move: "Commodity swings + infrastructure demand", trend: "down", summary: "Energy can be cyclical. If used, it should usually sit inside a satellite sleeve rather than dominate the core portfolio." },
-];
-
 const portfolioPlaybook = [
   { title: "Build a core and satellite structure", copy: "Many strong modern portfolios keep 70% to 90% in broad diversified funds and reserve only a smaller satellite sleeve for tactical ideas or sectors." },
   { title: "Control concentration risk", copy: "A practical beginner rule is to keep a single stock below 10% and any one sector below 25% of the portfolio." },
@@ -48,15 +40,29 @@ function renderMarketNews(items = []) {
   newsList.innerHTML = safeItems.slice(0, 6).map((item) => `<article class="news-item"><div class="news-meta">${item.source}${item.publishedAt ? ` | ${item.publishedAt}` : ""}</div><h4>${item.title}</h4><p>${item.summary || "Open the source article for the full update."}</p>${item.link ? `<a class="trend flat" href="${item.link}" target="_blank" rel="noreferrer">Open Source</a>` : ""}</article>`).join("");
 }
 
-function renderStaticInsights() {
-  const sectorGrid = document.getElementById("sector-grid");
+function renderPortfolioPlaybook() {
   const portfolioPlaybookElement = document.getElementById("portfolio-playbook");
-  if (sectorGrid) {
-    sectorGrid.innerHTML = sectorInsights.map((sector) => `<article class="sector-card"><div class="sector-meta">${sector.move}</div><h4>${sector.name}</h4><p>${sector.summary}</p><span class="trend ${sector.trend}">${sector.trend === "up" ? "Constructive" : sector.trend === "down" ? "Cyclical Risk" : "Selective"}</span></article>`).join("");
+  if (!portfolioPlaybookElement) return;
+  portfolioPlaybookElement.innerHTML = portfolioPlaybook.map((item) => `<article class="playbook-card"><h4>${item.title}</h4><p>${item.copy}</p></article>`).join("");
+}
+
+function renderSectorInsights(sectors = []) {
+  const sectorGrid = document.getElementById("sector-grid");
+  if (!sectorGrid) return;
+  if (!sectors.length) {
+    sectorGrid.innerHTML = `<article class="sector-card"><h4>Sector data unavailable</h4><p>Live sector insight data could not be loaded right now.</p><span class="trend flat">Retry later</span></article>`;
+    return;
   }
-  if (portfolioPlaybookElement) {
-    portfolioPlaybookElement.innerHTML = portfolioPlaybook.map((item) => `<article class="playbook-card"><h4>${item.title}</h4><p>${item.copy}</p></article>`).join("");
-  }
+
+  sectorGrid.innerHTML = sectors.slice(0, 5).map((sector) => {
+    const trend = sector.changePercent > 0.5 ? "up" : sector.changePercent < -0.5 ? "down" : "flat";
+    const narrative = trend === "up"
+      ? "Momentum is positive right now. A diversified approach still matters more than chasing one move."
+      : trend === "down"
+        ? "The sector is under pressure right now. Watch quality and valuation before reacting emotionally."
+        : "The sector is moving in a more selective range. Focus on quality leadership rather than broad assumptions.";
+    return `<article class="sector-card"><div class="sector-meta">${sector.symbol} | ${formatPercent(sector.changePercent)}</div><h4>${sector.name}</h4><p>${sector.description} ${narrative}</p><span class="trend ${trend}">${trend === "up" ? "Constructive" : trend === "down" ? "Cyclical Risk" : "Selective"}</span></article>`;
+  }).join("");
 }
 
 function renderHeroTicker(indices) {
@@ -133,6 +139,16 @@ async function loadNews() {
   }
 }
 
+async function loadDynamicSectors() {
+  try {
+    const response = await fetch("/api/screener/sectors");
+    const payload = await response.json();
+    renderSectorInsights(payload.sectors || []);
+  } catch (error) {
+    renderSectorInsights([]);
+  }
+}
+
 const rangeButtons = [...document.querySelectorAll(".range-btn")];
 rangeButtons.forEach((button) => {
   button.addEventListener("click", () => {
@@ -152,4 +168,5 @@ if (document.getElementById("news-list")) {
   setInterval(loadNews, 1000 * 60 * 20);
 }
 
-renderStaticInsights();
+renderPortfolioPlaybook();
+loadDynamicSectors();

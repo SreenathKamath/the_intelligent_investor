@@ -1,8 +1,9 @@
-const { rangeConfig, sectorMap, sendJson, fetchYahooIndex } = require("../_lib/data");
+const { rangeConfig, sendJson, fetchYahooIndex } = require("../_lib/data");
+const { sectorCatalog } = require("../_lib/dynamic");
 
 module.exports = async function handler(req, res) {
   const config = rangeConfig["1mo"];
-  const sectors = Object.values(sectorMap);
+  const sectors = Object.values(sectorCatalog);
 
   try {
     const liveSectors = await Promise.all(
