@@ -9,6 +9,25 @@ const screenerSearchHandler = require("./api/screener/search");
 const screenerStockHandler = require("./api/screener/stock");
 const booksHandler = require("./api/books");
 const learningContentHandler = require("./api/learning/content");
+const aiBudgetHandler = require("./api/ai/budget");
+const aiStockSummaryHandler = require("./api/ai/stock-summary");
+const researchAnalystHandler = require("./api/ai/research-analyst");
+
+const envPath = path.join(__dirname, ".env");
+if (fs.existsSync(envPath)) {
+  const envLines = fs.readFileSync(envPath, "utf8").split(/\r?\n/);
+  envLines.forEach((line) => {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith("#")) return;
+    const equalsIndex = trimmed.indexOf("=");
+    if (equalsIndex === -1) return;
+    const key = trimmed.slice(0, equalsIndex).trim();
+    const value = trimmed.slice(equalsIndex + 1).trim().replace(/^"(.*)"$/, "$1");
+    if (key && !process.env[key]) {
+      process.env[key] = value;
+    }
+  });
+}
 
 const port = process.env.PORT || 3000;
 const root = __dirname;
@@ -725,11 +744,28 @@ http
       await learningContentHandler(request, response);
       return;
     }
+
+    if (requestUrl.pathname === "/api/ai/budget") {
+      await aiBudgetHandler(request, response);
+      return;
+    }
+
+    if (requestUrl.pathname === "/api/ai/stock-summary") {
+      await aiStockSummaryHandler(request, response);
+      return;
+    }
+
+    if (requestUrl.pathname === "/api/ai/research-analyst") {
+      await researchAnalystHandler(request, response);
+      return;
+    }
     const requestPath = requestUrl.pathname === "/" ? "/index.html" : requestUrl.pathname;
     serveStatic(requestPath, response);
   })
   .listen(port, () => {
     console.log(`Intelligent Investor available at http://localhost:${port}`);
   });
+
+
 
 

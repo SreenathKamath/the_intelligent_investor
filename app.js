@@ -6,6 +6,8 @@ function loadScript(path) {
 
 const page = document.body.dataset.page;
 
+loadScript("./chat.js");
+
 if (page === "planner") {
   loadScript("./planner.js");
 }

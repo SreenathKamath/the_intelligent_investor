@@ -1,7 +1,70 @@
 const screenerState = {
   activeSector: "banking",
   range: "1mo",
+  latestSector: null,
+  latestSectorSource: "",
+  latestStockDetail: null,
 };
+
+function openAiModal(title, statusText, sections, sources = []) {
+  const modal = document.getElementById("aiModal");
+  const titleElement = document.getElementById("aiModalTitle");
+  const statusElement = document.getElementById("aiModalStatus");
+  const bodyElement = document.getElementById("aiModalBody");
+  const sourcesElement = document.getElementById("aiModalSources");
+  if (!modal || !titleElement || !statusElement || !bodyElement || !sourcesElement) return;
+
+  titleElement.textContent = title;
+  statusElement.textContent = statusText;
+  bodyElement.innerHTML = sections
+    .map(
+      (section) => `
+        <article class="ai-summary-card">
+          <h4>${section.heading}</h4>
+          ${section.items?.length ? `<ul>${section.items.map((item) => `<li>${item}</li>`).join("")}</ul>` : `<p>${section.body || ""}</p>`}
+        </article>
+      `
+    )
+    .join("");
+  sourcesElement.innerHTML = sources
+    .map((source) => `<a class="source-chip" href="${source.url}" target="_blank" rel="noreferrer">${source.label}</a>`)
+    .join("");
+  modal.classList.add("open");
+  modal.setAttribute("aria-hidden", "false");
+}
+
+function closeAiModal() {
+  const modal = document.getElementById("aiModal");
+  if (!modal) return;
+  modal.classList.remove("open");
+  modal.setAttribute("aria-hidden", "true");
+}
+
+function parseAiSections(summary) {
+  const blocks = `${summary || ""}`.split(/\n\s*\n/).map((block) => block.trim()).filter(Boolean);
+  if (!blocks.length) return [{ heading: "Summary", body: "No AI summary was returned." }];
+
+  return blocks.map((block, index) => {
+    const lines = block.split("\n").map((line) => line.trim()).filter(Boolean);
+    const first = lines[0] || "";
+    const headingMatch = first.match(/^(?:\d+\.\s*)?([^:]+):\s*(.*)$/);
+    if (headingMatch) {
+      const heading = headingMatch[1].trim();
+      const remainder = headingMatch[2].trim();
+      const rest = remainder ? [remainder, ...lines.slice(1)] : lines.slice(1);
+      return {
+        heading,
+        items: rest.filter((line) => /^[-*]/.test(line)).map((line) => line.replace(/^[-*]\s*/, "")),
+        body: rest.filter((line) => !/^[-*]/.test(line)).join(" "),
+      };
+    }
+    return {
+      heading: `Section ${index + 1}`,
+      items: lines.filter((line) => /^[-*]/.test(line)).map((line) => line.replace(/^[-*]\s*/, "")),
+      body: lines.filter((line) => !/^[-*]/.test(line)).join(" "),
+    };
+  });
+}
 
 function formatNumber(value) {
   return new Intl.NumberFormat("en-IN", { maximumFractionDigits: 2 }).format(value);
@@ -66,6 +129,13 @@ function renderSectorList(sectors) {
 }
 
 function renderSectorDetail(payload) {
+  screenerState.latestSector = payload.sector;
+  screenerState.latestSectorSource = payload.source || "";
+  window.intelligentInvestorScreenerContext = {
+    sector: screenerState.latestSector,
+    sectorSource: screenerState.latestSectorSource,
+    stock: screenerState.latestStockDetail,
+  };
   document.getElementById("sectorTitle").textContent = payload.sector.name;
   document.getElementById("sectorDescription").textContent = payload.sector.description;
 
@@ -128,10 +198,22 @@ async function loadSectorDetail() {
 function renderStockDetail(detail, warning = "") {
   const target = document.getElementById("stockDetail");
   if (!detail) {
+    screenerState.latestStockDetail = null;
+    window.intelligentInvestorScreenerContext = {
+      sector: screenerState.latestSector,
+      sectorSource: screenerState.latestSectorSource,
+      stock: null,
+    };
     target.innerHTML = `<div class="insight-item"><strong>No stock details available</strong><span>Try another symbol or search term.</span></div>`;
     return;
   }
 
+  screenerState.latestStockDetail = detail;
+  window.intelligentInvestorScreenerContext = {
+    sector: screenerState.latestSector,
+    sectorSource: screenerState.latestSectorSource,
+    stock: screenerState.latestStockDetail,
+  };
   target.innerHTML = `
     <div class="insight-item">
       <strong>${detail.shortName} (${detail.symbol})</strong>
@@ -165,6 +247,41 @@ async function loadStockDetail(symbol) {
     feedback.innerHTML = `Showing Indian market result for <strong>${payload.detail?.symbol || symbol}</strong>.`;
   }
   renderStockDetail(payload.detail, payload.warning || "");
+}
+
+async function loadStockAiSummary() {
+  if (!screenerState.latestStockDetail) return;
+  openAiModal("AI Stock Summary", "Generating AI stock summary...", [
+    { heading: "Working", body: "The screener data, business details, and sector context are being interpreted now." },
+  ]);
+
+  try {
+    const response = await fetch("/api/ai/stock-summary", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        stock: screenerState.latestStockDetail,
+        sector: screenerState.latestSector,
+        sectorSource: screenerState.latestSectorSource,
+      }),
+    });
+    const payload = await response.json();
+    if (!response.ok) throw new Error(payload.error || "AI stock summary failed");
+    const sources = [
+      payload.sourceUrl ? { label: "Business Reference", url: payload.sourceUrl } : null,
+      payload.sectorSource ? { label: "Sector Constituents", url: payload.sectorSource } : null,
+    ].filter(Boolean);
+    openAiModal(
+      "AI Stock Summary",
+      `${payload.model || "openrouter/free"}${payload.warning ? ` | ${payload.warning}` : ""}`,
+      parseAiSections(payload.summary),
+      sources
+    );
+  } catch (error) {
+    openAiModal("AI Stock Summary", "Unavailable", [
+      { heading: "AI summary unavailable", body: error.message || "The AI stock summary could not be generated right now." },
+    ]);
+  }
 }
 
 async function searchStock() {
@@ -203,4 +320,14 @@ document.getElementById("stockSearchInput").addEventListener("keydown", (event) 
   }
 });
 
+const stockAiButton = document.getElementById("stock-ai-button");
+if (stockAiButton) {
+  stockAiButton.addEventListener("click", loadStockAiSummary);
+}
+
+document.getElementById("aiModalClose")?.addEventListener("click", closeAiModal);
+document.querySelector("[data-ai-close='true']")?.addEventListener("click", closeAiModal);
+
 loadSectorDetail();
+
+

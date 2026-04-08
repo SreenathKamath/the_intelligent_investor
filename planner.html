@@ -77,6 +77,7 @@
               <div class="cta-row">
                 <button class="btn btn-primary" type="submit">Generate Full Plan</button>
                 <button class="btn btn-secondary" type="button" id="scenario-button">Load Growth Scenario</button>
+                <button class="btn btn-secondary" type="button" id="budget-ai-button">AI Summary</button>
               </div>
               <p class="helper-text">Educational guidance only. Always validate final investment decisions with your own research or a registered advisor.</p>
             </form>
@@ -88,13 +89,31 @@
               <article class="glass-panel output-card"><div class="card-heading"><h3>Cash Flow Visual</h3><p>A simple picture of how your monthly income is getting used.</p></div><div id="cashflow-chart" class="cashflow-chart"></div><div id="cashflow-caption" class="visual-explanation"></div></article>
               <article class="glass-panel output-card"><div class="card-heading"><h3>Where To Invest Next</h3><p>Priority buckets for the next phase of your capital.</p></div><div id="investment-lanes" class="investment-lanes"></div></article>
               <article class="glass-panel output-card"><div class="card-heading"><h3>Emergency, Debt & Risk Engine</h3><p>Cash resilience, EMI pressure, and liquidity discipline.</p></div><div id="risk-panel" class="insight-list"></div></article>
-              <article class="glass-panel output-card"><div class="card-heading"><h3>Goal & Projection Studio</h3><p>Projected wealth path, SIP need, and affordability gap.</p></div><div id="projection-panel" class="projection-panel"></div></article>
+              <article class="glass-panel output-card wide-card"><div class="card-heading"><h3>Goal & Projection Studio</h3><p>Projected wealth path, SIP need, and affordability gap.</p></div><div id="projection-panel" class="projection-panel"></div></article>
             </div>
           </div>
         </section>
       </main>
 
+      <div id="aiModal" class="ai-modal" aria-hidden="true">
+        <div class="ai-modal-backdrop" data-ai-close="true"></div>
+        <div class="ai-modal-panel glass-panel" role="dialog" aria-modal="true" aria-labelledby="aiModalTitle">
+          <div class="ai-modal-header">
+            <div>
+              <p class="eyebrow">AI Layer</p>
+              <h3 id="aiModalTitle">AI Summary</h3>
+              <p id="aiModalStatus" class="helper-text">Ready</p>
+            </div>
+            <button id="aiModalClose" class="btn btn-secondary" type="button">Close</button>
+          </div>
+          <div id="aiModalBody" class="ai-modal-body"></div>
+          <div id="aiModalSources" class="ai-modal-sources"></div>
+        </div>
+      </div>
+
       <script src="./app.js"></script>
     </div>
   </body>
 </html>
+
+

@@ -96,15 +96,34 @@
             </article>
 
             <article class="glass-panel stock-detail-panel">
-              <div class="card-heading">
-                <h3>Stock Detail</h3>
-                <p>Business context, key indicators, and technical summary for the searched symbol.</p>
+              <div class="card-heading inline-heading">
+                <div>
+                  <h3>Stock Detail</h3>
+                  <p>Business context, key indicators, and technical summary for the searched symbol.</p>
+                </div>
+                <button id="stock-ai-button" class="btn btn-secondary" type="button">AI Stock Summary</button>
               </div>
               <div id="stockDetail" class="insight-list"></div>
             </article>
           </div>
         </section>
       </main>
+
+      <div id="aiModal" class="ai-modal" aria-hidden="true">
+        <div class="ai-modal-backdrop" data-ai-close="true"></div>
+        <div class="ai-modal-panel glass-panel" role="dialog" aria-modal="true" aria-labelledby="aiModalTitle">
+          <div class="ai-modal-header">
+            <div>
+              <p class="eyebrow">AI Layer</p>
+              <h3 id="aiModalTitle">AI Stock Summary</h3>
+              <p id="aiModalStatus" class="helper-text">Ready</p>
+            </div>
+            <button id="aiModalClose" class="btn btn-secondary" type="button">Close</button>
+          </div>
+          <div id="aiModalBody" class="ai-modal-body"></div>
+          <div id="aiModalSources" class="ai-modal-sources"></div>
+        </div>
+      </div>
 
       <script src="./app.js"></script>
     </div>
